@@ -10,13 +10,8 @@ inputs:
     description: 'Godot Engine version'
     required: false
     default: '3.5'
-  package-name:
-    description: 'Android package name'
-    required: true
-  release-track:
-    description: 'Release track: production, beta, alpha, internalsharing, internal'
-    required: false
-    default: 'internal'
+
+  # signing
   signing-key-base64:
     description: 'Signing key in base64 format'
     required: true
@@ -29,6 +24,18 @@ inputs:
   key-password:
     description: 'Key password'
     required: true
+
+  # release
+  service-account-json:
+    description: 'Path to a valid Google service-account.json'
+    required: true
+  package-name:
+    description: 'Android package name'
+    required: true
+  release-track:
+    description: 'Release track: production, beta, alpha, internalsharing, internal'
+    required: false
+    default: 'internal'
   
 runs:
   using: "composite"
@@ -73,7 +80,7 @@ runs:
     - name: Publish to Play Store
       uses: r0adkll/upload-google-play@v1
       with:
-        serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+        serviceAccountJson: ${{ secrets.SERVICE_ACCOUNT_JSON }}
         packageName: ${{ inputs.package-name }}
         releaseFiles: ${{ steps.sign_app.outputs.signedReleaseFile }}
         track: ${{ inputs.release-track }}
