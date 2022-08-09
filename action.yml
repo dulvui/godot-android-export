@@ -1,0 +1,80 @@
+
+name: 'Export to Android and release to Alpha Channel'
+
+inputs:
+  working-directory:
+    description: 'The working directory'
+    required: false
+    default: '.'
+  godot-version:
+    description: 'Godot Engine version'
+    required: false
+    default: '3.5'
+  package-name:
+    description: 'Android package name'
+    required: true
+  release-track:
+    description: 'Release track: production, beta, alpha, internalsharing, internal'
+    required: false
+    default: 'internal'
+  signing-key-base64:
+    description: 'Signing key in base64 format'
+    required: true
+  alias:
+    description: 'Keystore alias'
+    required: true
+  key-store-password:
+    description: 'Keystore password'
+    required: true
+  key-password:
+    description: 'Key password'
+    required: true
+  
+runs:
+  using: "composite"
+  steps:
+    - name: Download and config Godot Engine headless linux server and templates
+      run: |
+      wget https://downloads.tuxfamily.org/godotengine/${{ inputs.godot-version }}/Godot_v${{ inputs.godot-version }}-stable_linux_headless.64.zip \
+      wget https://downloads.tuxfamily.org/godotengine/${{ inputs.godot-version }}/Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz \
+      mkdir ~/.cache \
+      mkdir -p ~/.config/godot \
+      mkdir -p ~/.local/share/godot/templates/${{ inputs.godot-version }}.stable \
+      unzip Godot_v${{ inputs.godot-version }}-stable_linux_headless.64.zip \
+      mv Godot_v${{ inputs.godot-version }}-stable_linux_headless.64 /usr/local/bin/godot \
+      unzip Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz \
+      mv templates/* ~/.local/share/godot/templates/${{ inputs.godot-version }}.stable \
+      rm -f Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz Godot_v${{ inputs.godot-version }}-stable_linux_headless.64.zip
+
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v2
+
+    - name: Create Godot settings
+      env:
+        SETTINGS: |
+          gd_resource type="EditorSettings" format=2]
+
+          [resource]
+          export/android/android_sdk_path = "/usr/local/lib/android/sdk"
+      run: echo "$SETTINGS" > ~/editor_settings-3.tres
+
+    - name: Sign AAB
+      uses: r0adkll/sign-android-release@v1
+      # ID used to access action output
+      id: sign_app
+      with:
+        releaseDirectory: ./
+        signingKeyBase64: ${{ inputs.signing-key-base64 }}
+        alias: ${{ inputs.alias}}
+        keyStorePassword: ${{ inputs.key-store-password }}
+        keyPassword: ${{ inputs.key-password }}
+
+    - name: Publish to Play Store
+      uses: r0adkll/upload-google-play@v1
+      with:
+        serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+        packageName: ${{ inputs.package-name }}
+        releaseFiles: ${{ steps.sign_app.outputs.signedReleaseFile }}
+        track: ${{ inputs.release-track }}
+        status: completed
