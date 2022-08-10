@@ -36,20 +36,20 @@ runs:
         distribution: 'temurin'
         java-version: 11
 
-    # - name: Setup Android SDK
-    #   uses: android-actions/setup-android@v2
-
     - name: Setup Android SDK
-      shell: bash
-      run: |
-        wget -q https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
-        unzip commandlinetools-linux-*_latest.zip -d tools
-        mkdir -p $GITHUB_WORKSPACE/Android/SDK
-        mv tools $GITHUB_WORKSPACE/Android/
-        rm -f commandlinetools-linux-*_latest.zip
-        cd Android/tools/cmdline-tools/bin
-        yes 2>/dev/null | ./sdkmanager --licenses --sdk_root=$GODOT_WORKSPACE/Android/SDK
-        ./sdkmanager --sdk_root=$GITHUB_WORKSPACE/Android/SDK "platform-tools" "build-tools;30.0.3" "platforms;android-31" "cmdline-tools;latest" "cmake;3.10.2.4988404" "ndk;21.4.7075529"
+      uses: android-actions/setup-android@v2
+
+    # - name: Setup Android SDK
+    #   shell: bash
+    #   run: |
+    #     wget -q https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
+    #     unzip commandlinetools-linux-*_latest.zip -d tools
+    #     mkdir -p $GITHUB_WORKSPACE/Android/SDK
+    #     mv tools $GITHUB_WORKSPACE/Android/
+    #     rm -f commandlinetools-linux-*_latest.zip
+    #     cd Android/tools/cmdline-tools/bin
+    #     yes 2>/dev/null | ./sdkmanager --licenses --sdk_root=$GODOT_WORKSPACE/Android/SDK
+    #     ./sdkmanager --sdk_root=$GITHUB_WORKSPACE/Android/SDK "platform-tools" "build-tools;30.0.3" "platforms;android-31" "cmdline-tools;latest" "cmake;3.10.2.4988404" "ndk;21.4.7075529"
 
     - name: Download and config Godot Engine headless linux server and templates
       shell: bash
