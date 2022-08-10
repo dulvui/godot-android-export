@@ -42,19 +42,28 @@ runs:
         mv Godot_v${{ inputs.godot-version }}-stable_linux_headless.64 /usr/local/bin/godot
         unzip Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz
         mv templates/* ~/.local/share/godot/templates/${{ inputs.godot-version }}.stable
-
+        rm -f Godot_v${{ inputs.godot-version }}-stable_linux_headless.64.zip Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz
+        godot -e -q
 
     - name: Setup Android SDK
-      uses: android-actions/setup-android@v2
+      shell: bash
+      run: |
+        wget -q https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
+        unzip commandlinetools-linux-*_latest.zip -d cmdline-tools
+        mkdir -p /usr/lib/android-sdk
+        mv cmdline-tools /usr/lib/android-sdk
+        rm -f commandlinetools-linux-*_latest.zip
+        yes | ./usr/lib/android-sdk/cmdline-tools/sdkmanager --licenses
+        ./usr/lib/android-sdk/cmdline-tools/sdkmanager --sdk_root=/usr/lib/android-sdk "platform-tools" "build-tools;30.0.3" "platforms;android-31" "cmdline-tools;latest" "cmake;3.10.2.4988404" "ndk;21.4.7075529"
 
-    - name: Set Android DK path in Godot Editor settings
+    - name: Set Android SDK path in Godot Editor settings
       shell: bash
       env:
         SETTINGS: |
-          export/android/adb = "/usr/local/lib/android/sdk/platform-tools/adb"
-          export/android/jarsigner = "/usr/bin/jarsigner"
-          export/android/custom_build_sdk_path = "/usr/local/lib/android/cmdline-tools/bin/tools/android-sdk"
-          export/android/android_sdk_path = "/usr/local/lib/android/sdk"
+          export/android/custom_build_sdk_path = "/usr/lib/android/cmdline-tools/bin/tools/android-sdk"
+          export/android/android_sdk_path = "/usr/lib/android/sdk"
+          export/android/shutdown_adb_on_exit = true
+          export/android/force_system_user = false
       run: echo $SETTINGS >> ~/.config/godot/editor_settings-3.tres
 
     - name: Export
