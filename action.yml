@@ -11,20 +11,6 @@ inputs:
     required: false
     default: '3.5'
 
-  # signing
-  signing-key-base64:
-    description: 'Signing key in base64 format'
-    required: true
-  alias:
-    description: 'Keystore alias'
-    required: true
-  key-store-password:
-    description: 'Keystore password'
-    required: true
-  key-password:
-    description: 'Key password'
-    required: true
-
   # release
   service-account-json:
     description: 'Path to a valid Google service-account.json'
@@ -32,10 +18,14 @@ inputs:
   package-name:
     description: 'Android package name'
     required: true
+  release-file:
+    description: 'Path to the apk/aab file'
+    required: true
   release-track:
     description: 'Release track: production, beta, alpha, internalsharing, internal'
     required: false
     default: 'internal'
+
   
 runs:
   using: "composite"
@@ -50,14 +40,13 @@ runs:
       unzip Godot_v${{ inputs.godot-version }}-stable_linux_headless.64.zip \
       mv Godot_v${{ inputs.godot-version }}-stable_linux_headless.64 /usr/local/bin/godot \
       unzip Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz \
-      mv templates/* ~/.local/share/godot/templates/${{ inputs.godot-version }}.stable \
-      rm -f Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz Godot_v${{ inputs.godot-version }}-stable_linux_headless.64.zip
+      mv templates/* ~/.local/share/godot/templates/${{ inputs.godot-version }}.stable
 
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v2
 
-    - name: Create Godot settings
+    - name: Set Android DK path in Godot Editor settings
       env:
         SETTINGS: |
           gd_resource type="EditorSettings" format=2]
@@ -66,22 +55,14 @@ runs:
           export/android/android_sdk_path = "/usr/local/lib/android/sdk"
       run: echo "$SETTINGS" > ~/editor_settings-3.tres
 
-    - name: Sign AAB
-      uses: r0adkll/sign-android-release@v1
-      # ID used to access action output
-      id: sign_app
-      with:
-        releaseDirectory: ./
-        signingKeyBase64: ${{ inputs.signing-key-base64 }}
-        alias: ${{ inputs.alias}}
-        keyStorePassword: ${{ inputs.key-store-password }}
-        keyPassword: ${{ inputs.key-password }}
+    - name: Export
+      run: godot --path ${{ inputs.working-directory }} --export Android
 
     - name: Publish to Play Store
       uses: r0adkll/upload-google-play@v1
       with:
         serviceAccountJson: ${{ inputs.service-account-json }}
         packageName: ${{ inputs.package-name }}
-        releaseFiles: ${{ steps.sign_app.outputs.signedReleaseFile }}
+        releaseFiles: ${{ inputs.release-file }}
         track: ${{ inputs.release-track }}
         status: completed
