@@ -1,5 +1,5 @@
 
-name: 'Export to Android and release to Alpha Channel'
+name: 'Godot Engine: Export to Android and release to Google Play Store'
 
 inputs:
   working-directory:
@@ -80,7 +80,7 @@ runs:
     - name: Publish to Play Store
       uses: r0adkll/upload-google-play@v1
       with:
-        serviceAccountJson: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+        serviceAccountJson: ${{ inputs.service-account-json }}
         packageName: ${{ inputs.package-name }}
         releaseFiles: ${{ steps.sign_app.outputs.signedReleaseFile }}
         track: ${{ inputs.release-track }}
