@@ -44,8 +44,8 @@ runs:
       run: |
         wget -q https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
         unzip commandlinetools-linux-*_latest.zip -d tools
-        mkdir -p Android/SDK
-        mv tools Android/
+        mkdir -p $GODOT_WORKSPACE/Android/SDK
+        mv tools $GODOT_WORKSPACE/Android/
         rm -f commandlinetools-linux-*_latest.zip
         cd Android/tools/cmdline-tools/bin
         yes 2>/dev/null | ./sdkmanager --licenses --sdk_root=$GODOT_WORKSPACE/Android/SDK
