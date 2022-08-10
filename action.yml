@@ -48,8 +48,8 @@ runs:
         mv tools Android/
         rm -f commandlinetools-linux-*_latest.zip
         cd Android/tools/cmdline-tools/bin
-        yes 2>/dev/null | ./sdkmanager --licenses --sdk_root=Android/SDK
-        ./sdkmanager --sdk_root=Android/SDK "platform-tools" "build-tools;30.0.3" "platforms;android-31" "cmdline-tools;latest" "cmake;3.10.2.4988404" "ndk;21.4.7075529"
+        yes 2>/dev/null | sdkmanager --licenses --sdk_root=Android/SDK
+        sdkmanager --sdk_root=Android/SDK "platform-tools" "build-tools;30.0.3" "platforms;android-31" "cmdline-tools;latest" "cmake;3.10.2.4988404" "ndk;21.4.7075529"
 
     - name: Download and config Godot Engine headless linux server and templates
       shell: bash
