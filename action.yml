@@ -55,7 +55,7 @@ runs:
 
           [resource]
           export/android/android_sdk_path = "/usr/local/lib/android/sdk"
-      run: echo "$SETTINGS" > ~/editor_settings-3.tres
+      run: echo "$SETTINGS" > .config/godot/editor_settings-3.tres
 
     - name: Export
       shell: bash
