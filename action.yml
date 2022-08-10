@@ -51,11 +51,11 @@ runs:
       shell: bash
       env:
         SETTINGS: |
-          gd_resource type="EditorSettings" format=2]
-
-          [resource]
+          export/android/adb = "/usr/local/lib/android/sdk/platform-tools/adb"
+          export/android/jarsigner = "/usr/bin/jarsigner"
+          export/android/custom_build_sdk_path = "/usr/local/lib/android/cmdline-tools/bin/tools/android-sdk"
           export/android/android_sdk_path = "/usr/local/lib/android/sdk"
-      run: echo "$SETTINGS" > ~/.config/godot/editor_settings-3.tres
+      run: echo $SETTINGS >> ~/.config/godot/editor_settings-3.tres
 
     - name: Export
       shell: bash
