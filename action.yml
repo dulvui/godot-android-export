@@ -31,6 +31,7 @@ runs:
   using: "composite"
   steps:
     - name: Download and config Godot Engine headless linux server and templates
+      shell: bash
       run: |
         wget https://downloads.tuxfamily.org/godotengine/${{ inputs.godot-version }}/Godot_v${{ inputs.godot-version }}-stable_linux_headless.64.zip \
         wget https://downloads.tuxfamily.org/godotengine/${{ inputs.godot-version }}/Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz \
@@ -47,6 +48,7 @@ runs:
       uses: android-actions/setup-android@v2
 
     - name: Set Android DK path in Godot Editor settings
+      shell: bash
       env:
         SETTINGS: |
           gd_resource type="EditorSettings" format=2]
@@ -56,6 +58,7 @@ runs:
       run: echo "$SETTINGS" > ~/editor_settings-3.tres
 
     - name: Export
+      shell: bash
       run: godot --path ${{ inputs.working-directory }} --export Android
 
     - name: Publish to Play Store
