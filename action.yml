@@ -43,7 +43,7 @@ runs:
       shell: bash
       run: |
         wget -q https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
-        unzip commandlinetools-linux-*_latest.zip -d cmdline-tools
+        unzip commandlinetools-linux-*_latest.zip
         mkdir -p Android/SDK
         mv cmdline-tools Android/
         rm -f commandlinetools-linux-*_latest.zip
