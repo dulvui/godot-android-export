@@ -47,7 +47,7 @@ runs:
         mkdir -p Android/SDK
         mv cmdline-tools Android/
         rm -f commandlinetools-linux-*_latest.zip
-        cd Android/cmdline-tools
+        cd Android/cmdline-tools/bin
         yes | ./sdkmanager --licenses
         ./sdkmanager --sdk_root=Android/SDK "platform-tools" "build-tools;30.0.3" "platforms;android-31" "cmdline-tools;latest" "cmake;3.10.2.4988404" "ndk;21.4.7075529"
 
