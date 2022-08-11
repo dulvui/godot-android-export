@@ -17,7 +17,7 @@ inputs:
     description: 'Your release signing key as base 64'
     required: true
   debug-signing-key-base64:
-    description: 'Your debug signing key as base 64. It is mandatory to export.'
+    description: 'Your debug signing key as base 64. It is mandatory to export'
     required: true
   version-code:
     description: 'Version code like 68'
@@ -67,10 +67,9 @@ runs:
         rm -f Godot_v${{ inputs.godot-version }}-stable_linux_headless.64.zip Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz
         godot -e -q
 
-
     - name: Create service-account.json
       shell: bash
-      run: echo ${{ inputs.service-account-json }} > service-account.json
+      run: echo -n ${{ inputs.service-account-json }} > service-account.json
 
     - name: Create export_presets.cfg
       shell: bash
