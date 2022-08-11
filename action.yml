@@ -58,10 +58,10 @@ runs:
       uses: actions/cache@v3
       with:
         path: |
-          ~/.local/share/godot/
+          .local/share/godot/
           /usr/local/bin/godot
-          ~/.cache/
-          ~/.config/godot/
+          .cache/
+          .config/godot/
         key: ${{ runner.os }}-godot-${{ inputs.godot-version }}
 
     - name: Download and config Godot Engine headless linux server and templates
