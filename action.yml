@@ -44,11 +44,6 @@ inputs:
   
 runs:
   using: "composite"
-  env:
-    SERVICE_ACCOUNT_JSON: ${{ inputs.service-account-json }}
-    PASSWORD: ${{ inputs.some-password }}
-    PROXY_USERNAME:  ${{ inputs.proxy-username }}
-    PROXY_PASSWORD:  ${{ inputs.proxy-password }}
   steps:
     - name: Set up JDK 1.8
       uses: actions/setup-java@v3
@@ -99,6 +94,8 @@ runs:
 
     - name: Create service-account.json
       shell: bash
+      env:
+        SERVICE_ACCOUNT_JSON: ${{ inputs.service-account-json }}
       run: echo $SERVICE_ACCOUNT_JSON > service-account.json
 
     - name: Create export_presets.cfg
