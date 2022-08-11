@@ -62,7 +62,7 @@ runs:
           /usr/local/bin/godot
           ~/.cache/
           ~/.config/godot/
-        key: ${{ runner.os }}-godot
+        key: ${{ runner.os }}-godot-${{ inputs.godot-version }}
 
     - name: Download and config Godot Engine headless linux server and templates
       if: steps.cache-godot.outputs.cache-hit != 'true'
