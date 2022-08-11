@@ -25,20 +25,6 @@ inputs:
   version-name:
     description: 'Version name like 4.0.2'
     required: true
-  service-account-json:
-    description: 'Path to a valid Google service-account.json'
-    required: true
-  package-name:
-    description: 'Android package name'
-    required: true
-  release-file:
-    description: 'Path to the apk/aab file'
-    required: true
-  release-track:
-    description: 'Release track: production, beta, alpha, internalsharing, internal'
-    required: false
-    default: 'internal'
-
   
 runs:
   using: "composite"
@@ -51,7 +37,6 @@ runs:
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v2
-
 
     - name: Cache Godot files
       id: cache-godot
@@ -90,10 +75,6 @@ runs:
           export/android/force_system_user = false
       run: echo $SETTINGS >> ~/.config/godot/editor_settings-3.tres
 
-    - name: Create service-account.json
-      shell: bash
-      run: echo -e ${{ inputs.service-account-json }} > service-account.json
-
     - name: Create export_presets.cfg
       shell: bash
       run: echo ${{ inputs.export-preset-cfg }} > ${{ inputs.working-directory }}/export_presets.cfg
@@ -119,12 +100,3 @@ runs:
     - name: Export
       shell: bash
       run: godot --path ${{ inputs.working-directory }} --export Android
-
-    - name: Publish to Play Store
-      uses: r0adkll/upload-google-play@v1
-      with:
-        serviceAccountJson: service-account.json
-        packageName: ${{ inputs.package-name }}
-        releaseFiles: ${{ inputs.release-file }}
-        track: ${{ inputs.release-track }}
-        status: completed
