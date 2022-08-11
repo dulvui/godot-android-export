@@ -69,19 +69,19 @@ runs:
 
     - name: Create service-account.json
       shell: bash
-      run: echo -n ${{ inputs.service-account-json }} > service-account.json
+      run: echo "${{ inputs.service-account-json }}" > service-account.json
 
     - name: Create export_presets.cfg
       shell: bash
-      run: echo ${{ inputs.export-preset-cfg }} > ${{ inputs.working-directory }}/export_presets.cfg
+      run: echo "${{ inputs.export-preset-cfg }}" > ${{ inputs.working-directory }}/export_presets.cfg
 
     - name: Create release keystore
       shell: bash
-      run: echo ${{ inputs.release-signing-key-base64 }} | base64 --decode > keystore.keystore
+      run: echo "${{ inputs.release-signing-key-base64 }}" | base64 --decode > keystore.keystore
 
     - name: Generate debug keystore
       shell: bash
-      run: echo ${{ inputs.debug-signing-key-base64 }} | base64 --decode > debug.keystore
+      run: echo "${{ inputs.debug-signing-key-base64 }}" | base64 --decode > debug.keystore
 
     - name: Replace keystore path in export_presets.cfg
       shell: bash
@@ -100,7 +100,7 @@ runs:
           export/android/android_sdk_path = "/usr/local/lib/android/sdk"
           export/android/shutdown_adb_on_exit = true
           export/android/force_system_user = false
-      run: echo $SETTINGS >> ~/.config/godot/editor_settings-3.tres
+      run: echo "$SETTINGS" >> ~/.config/godot/editor_settings-3.tres
 
     - name: Export
       shell: bash
