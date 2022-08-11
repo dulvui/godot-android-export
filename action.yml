@@ -10,8 +10,21 @@ inputs:
     description: 'Godot Engine version'
     required: false
     default: '3.5'
-
-  # release
+  export-preset-cfg:
+    description: 'Check README how to create a valid export_presets.cfg'
+    required: true
+  release-signing-key-base64:
+    description: 'Your release signing key as base 64'
+    required: true
+  debug-signing-key-base64:
+    description: 'Your debug signing key as base 64. It is mandatory to export.'
+    required: true
+  version-code:
+    description: 'Version code like 68'
+    required: true
+  version-name:
+    description: 'Version name like 4.0.2'
+    required: true
   service-account-json:
     description: 'Path to a valid Google service-account.json'
     required: true
@@ -54,6 +67,33 @@ runs:
         rm -f Godot_v${{ inputs.godot-version }}-stable_linux_headless.64.zip Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz
         godot -e -q
 
+
+    - name: Create service-account.json
+      shell: bash
+      run: echo ${{ inputs.service-account-json }} > service-account.json
+
+    - name: Create export_presets.cfg
+      shell: bash
+      run: echo ${{ inputs.export-preset-cfg }} > ${{ inputs.working-directory }}/export_presets.cfg
+
+    - name: Create release keystore
+      shell: bash
+      run: echo ${{ inputs.release-signing-key-base64 }} | base64 --decode > keystore.keystore
+
+    - name: Generate debug keystore
+      shell: bash
+      run: echo ${{ inputs.debug-signing-key-base64 }} | base64 --decode > debug.keystore
+
+    - name: Replace keystore path in export_presets.cfg
+      shell: bash
+      run: sed -i "s|KEYSTORE_PATH|$GITHUB_WORKSPACE/keystore.keystore|g" ${{ inputs.working-directory }}/export_presets.cfg
+
+    - name: Add version to export_presets.cfg
+      shell: bash
+      run: |
+        sed -i "s|VERSION_CODE|${{ inputs.version-code }}|g" ${{ inputs.working-directory }}/export_presets.cfg
+        sed -i "s|VERSION_NAME|${{ inputs.version-name }}|g" ${{ inputs.working-directory }}/export_presets.cfg
+
     - name: Set Android SDK path in Godot Editor settings
       shell: bash
       env:
@@ -63,7 +103,6 @@ runs:
           export/android/force_system_user = false
       run: echo $SETTINGS >> ~/.config/godot/editor_settings-3.tres
 
-
     - name: Export
       shell: bash
       run: godot --path ${{ inputs.working-directory }} --export Android
@@ -71,7 +110,7 @@ runs:
     - name: Publish to Play Store
       uses: r0adkll/upload-google-play@v1
       with:
-        serviceAccountJson: ${{ inputs.service-account-json }}
+        serviceAccountJson: service-account.json
         packageName: ${{ inputs.package-name }}
         releaseFiles: ${{ inputs.release-file }}
         track: ${{ inputs.release-track }}
