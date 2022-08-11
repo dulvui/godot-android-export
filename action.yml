@@ -52,7 +52,20 @@ runs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v2
 
+
+    - name: Cache Godot files
+      id: cache-godot
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.local/share/godot/
+          /usr/local/bin/godot
+          ~/.cache/
+          ~/.config/godot/
+        key: ${{ runner.os }}-godot
+
     - name: Download and config Godot Engine headless linux server and templates
+      if: steps.cache-godot.outputs.cache-hit != 'true'
       shell: bash
       run: |
         wget -q https://downloads.tuxfamily.org/godotengine/${{ inputs.godot-version }}/Godot_v${{ inputs.godot-version }}-stable_linux_headless.64.zip
@@ -67,9 +80,19 @@ runs:
         rm -f Godot_v${{ inputs.godot-version }}-stable_linux_headless.64.zip Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz
         godot -e -q
 
+    - name: Set Android SDK path in Godot Editor settings
+      if: steps.cache-godot.outputs.cache-hit != 'true'
+      shell: bash
+      env:
+        SETTINGS: |
+          export/android/android_sdk_path = "/usr/local/lib/android/sdk"
+          export/android/shutdown_adb_on_exit = true
+          export/android/force_system_user = false
+      run: echo "$SETTINGS" >> ~/.config/godot/editor_settings-3.tres
+
     - name: Create service-account.json
       shell: bash
-      run: echo "${{ inputs.service-account-json }}" > service-account.json
+      run: echo ${{ inputs.service-account-json }} > service-account.json
 
     - name: Create export_presets.cfg
       shell: bash
@@ -92,15 +115,6 @@ runs:
       run: |
         sed -i "s|VERSION_CODE|${{ inputs.version-code }}|g" ${{ inputs.working-directory }}/export_presets.cfg
         sed -i "s|VERSION_NAME|${{ inputs.version-name }}|g" ${{ inputs.working-directory }}/export_presets.cfg
-
-    - name: Set Android SDK path in Godot Editor settings
-      shell: bash
-      env:
-        SETTINGS: |
-          export/android/android_sdk_path = "/usr/local/lib/android/sdk"
-          export/android/shutdown_adb_on_exit = true
-          export/android/force_system_user = false
-      run: echo "$SETTINGS" >> ~/.config/godot/editor_settings-3.tres
 
     - name: Export
       shell: bash
