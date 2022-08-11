@@ -100,15 +100,21 @@ runs:
 
     - name: Create export_presets.cfg
       shell: bash
-      run: echo ${{ inputs.export-preset-cfg }} > ${{ inputs.working-directory }}/export_presets.cfg
+      env:
+        EXPORT_PRESET_CFG: ${{ inputs.export-preset-cfg }}
+      run: echo $EXPORT_PRESET_CFG > ${{ inputs.working-directory }}/export_presets.cfg
 
     - name: Create release keystore
       shell: bash
-      run: echo ${{ inputs.release-signing-key-base64 }} | base64 --decode > keystore.keystore
+      env:
+        RELEASE_KEY_STORE_BASE64: ${{ inputs.release-signing-key-base64 }}
+      run: echo $RELEASE_KEY_STORE_BASE64 | base64 --decode > keystore.keystore
 
     - name: Generate debug keystore
       shell: bash
-      run: echo ${{ inputs.debug-signing-key-base64 }} | base64 --decode > debug.keystore
+      env:
+        DEBUG_KEY_STORE_BASE64: ${{ inputs.release-signing-key-base64 }}
+      run: echo $DEBUG_KEY_STORE_BASE64 | base64 --decode > debug.keystore
 
     - name: Replace keystore path in export_presets.cfg
       shell: bash
