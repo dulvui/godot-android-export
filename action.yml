@@ -24,7 +24,10 @@ inputs:
     description: 'Release track: production, beta, alpha, internalsharing, internal'
     required: false
     default: 'internal'
-
+  cache-version:
+    description: 'Version for Godot files cache, to be able to clear cache'
+    required: false
+    default: 1
   
 runs:
   using: "composite"
@@ -47,7 +50,7 @@ runs:
           /usr/local/bin/godot
           ~/.cache/**
           ~/.config/godot/**
-        key: ${{ runner.os }}-godot-${{ inputs.godot-version }}
+        key: ${{ runner.os }}-godot-${{ inputs.godot-version }}-v${{ inputs.cache-version }}
 
     - name: Download and config Godot Engine headless linux server and templates
       if: steps.cache-godot.outputs.cache-hit != 'true'
