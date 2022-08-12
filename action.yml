@@ -10,24 +10,10 @@ inputs:
     description: 'Godot Engine version'
     required: false
     default: '3.5'
-  export-preset-cfg:
-    description: 'Check README how to create a valid export_presets.cfg'
-    required: true
-  release-signing-key-base64:
-    description: 'Your release signing key as base 64'
-    required: true
-  debug-signing-key-base64:
-    description: 'Your debug signing key as base 64. It is mandatory to export'
-    required: true
-  version-code:
-    description: 'Version code like 68'
-    required: true
-  version-name:
-    description: 'Version name like 4.0.2'
-    required: true
   service-account-json:
     description: 'Path to a valid Google service-account.json'
-    required: true
+    required: false
+    default: service-account.json
   package-name:
     description: 'Android package name'
     required: true
@@ -39,8 +25,6 @@ inputs:
     required: false
     default: 'internal'
 
-# fixes problem with echo of env files in composite actions
-# https://github.com/actions/runner/issues/1557
   
 runs:
   using: "composite"
@@ -53,7 +37,6 @@ runs:
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v2
-
 
     - name: Cache Godot files
       id: cache-godot
@@ -91,40 +74,6 @@ runs:
           export/android/shutdown_adb_on_exit = true
           export/android/force_system_user = false
       run: echo $SETTINGS >> ~/.config/godot/editor_settings-3.tres
-
-    - name: Create service-account.json
-      shell: bash
-      env:
-        SERVICE_ACCOUNT_JSON: ${{ inputs.service-account-json }}
-      run: echo $SERVICE_ACCOUNT_JSON > service-account.json
-
-    - name: Create export_presets.cfg
-      shell: bash
-      env:
-        EXPORT_PRESET_CFG: ${{ inputs.export-preset-cfg }}
-      run: echo $EXPORT_PRESET_CFG > ${{ inputs.working-directory }}/export_presets.cfg
-
-    - name: Create release keystore
-      shell: bash
-      env:
-        RELEASE_KEY_STORE_BASE64: ${{ inputs.release-signing-key-base64 }}
-      run: echo $RELEASE_KEY_STORE_BASE64 | base64 --decode > keystore.keystore
-
-    - name: Generate debug keystore
-      shell: bash
-      env:
-        DEBUG_KEY_STORE_BASE64: ${{ inputs.release-signing-key-base64 }}
-      run: echo $DEBUG_KEY_STORE_BASE64 | base64 --decode > debug.keystore
-
-    - name: Replace keystore path in export_presets.cfg
-      shell: bash
-      run: sed -i "s|KEYSTORE_PATH|$GITHUB_WORKSPACE/keystore.keystore|g" ${{ inputs.working-directory }}/export_presets.cfg
-
-    - name: Add version to export_presets.cfg
-      shell: bash
-      run: |
-        sed -i "s|VERSION_CODE|${{ inputs.version-code }}|g" ${{ inputs.working-directory }}/export_presets.cfg
-        sed -i "s|VERSION_NAME|${{ inputs.version-name }}|g" ${{ inputs.working-directory }}/export_presets.cfg
 
     - name: Export
       shell: bash
