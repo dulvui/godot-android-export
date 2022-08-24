@@ -1,5 +1,7 @@
 
-name: 'Godot Engine: Export to Android and release to Google Play Store'
+name: 'Godot Android Release'
+description: 'Godot Engine: Export to Android and release to Google Play Store'
+author: 'Simon Dalvai'
 
 inputs:
   working-directory:
