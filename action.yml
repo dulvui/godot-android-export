@@ -23,7 +23,7 @@ inputs:
     description: 'Android package name'
     required: true
   release-file:
-    description: 'Path to the apk/aab file'
+    description: 'Path to the apk file'
     required: true
   release-track:
     description: 'Release track: production, beta, alpha, internalsharing, internal'
