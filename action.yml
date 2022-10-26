@@ -49,7 +49,6 @@ runs:
         path: |
           ~/.local/share/godot/**
           /usr/local/bin/godot
-          ~/.cache/**
           ~/.config/godot/**
         key: ${{ runner.os }}-godot-${{ inputs.godot-version }}
 
