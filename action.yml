@@ -85,7 +85,7 @@ runs:
     - name: Publish to Play Store
       uses: r0adkll/upload-google-play@v1
       with:
-        serviceAccountJson: service-account.json
+        serviceAccountJson: ${{ inputs.service-account-json }}
         packageName: ${{ inputs.package-name }}
         releaseFiles: ${{ inputs.release-file }}
         track: ${{ inputs.release-track }}
