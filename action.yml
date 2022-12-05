@@ -1,6 +1,6 @@
 
-name: 'Godot Android Release'
-description: 'Godot Engine: Export to Android and release to Google Play Store'
+name: 'Godot Android Upload'
+description: 'Godot Engine: Export to Android and upload to Google Play Store'
 author: 'Simon Dalvai @dulvui'
 branding:
   color: blue
