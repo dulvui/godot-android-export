@@ -1,9 +1,9 @@
-# godot-android-release
+# godot-android-upload
 Github Action to export a Godot game to the Google Play Store.  
 If you are facing problems with the action or this README feels uncomplete, pull requests are welcome or open an issue.
 
 ## Table of contents
-- [godot-android-release](#godot-android-release)
+- [godot-android-upload](#godot-android-upload)
   - [Table of contents](#table-of-contents)
   - [Requirements](#requirements)
   - [Parameters](#parameters)
@@ -28,7 +28,7 @@ If you are facing problems with the action or this README feels uncomplete, pull
 
 ## Working examples
 You an find a working examples here:  
-https://github.com/dulvui/pocket-broomball/blob/main/.github/workflows/release-android.yml
+https://github.com/dulvui/pocket-broomball/blob/main/.github/workflows/upload-android.yml
 
 ## License
 This software is licensed under the [MIT license](LICENSE).
