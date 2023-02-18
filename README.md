@@ -1,6 +1,6 @@
 # godot-android-upload
 Github Action to export a Godot game to the Google Play Store.  
-If you are facing problems with the action or this README feels uncomplete, pull requests are welcome or open an issue.
+If you are facing problems with the action or this README feels not complete, pull requests are welcome or open an issue.
 
 ## Table of contents
 - [godot-android-upload](#godot-android-upload)
@@ -19,7 +19,7 @@ If you are facing problems with the action or this README feels uncomplete, pull
 | key | required | default | description |
 | ----|----------|---------|-------------|
 | package-name | true |   | Android package name |
-| release-file | true |   | Path to the .apk file |
+| release-file | true |   | Path to the .apk or .aab file |
 | release-track | false | internal  | Release track: production, beta, alpha, internalsharing, internal |
 | working-directory | false | . | Path to .project file |
 | service-account-json | false | service-account.json | Path tho your Google service-account.json file  |
