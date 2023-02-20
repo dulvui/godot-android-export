@@ -94,6 +94,7 @@ runs:
         cat ${{ inputs.working-directory }}/android/.build_version
 
     - name: Open game in editor once to load assets
+      shell: bash
       run: godot -e -q --path $${{ inputs.working-directory }}
 
     - name: Export
