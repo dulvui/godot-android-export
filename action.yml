@@ -95,7 +95,7 @@ runs:
 
     - name: Open game in editor once to load assets
       shell: bash
-      run: godot -e -q --path $${{ inputs.working-directory }}
+      run: godot -e -q --path ${{ inputs.working-directory }}
 
     - name: Export
       shell: bash
