@@ -21,6 +21,7 @@ If you are facing problems with the action or this README feels not complete, pu
 | package-name | true |   | Android package name |
 | release-file | true |   | Path to the .apk or .aab file |
 | release-track | false | internal  | Release track: production, beta, alpha, internalsharing, internal |
+| changes-not-sent-for-review | false | false | Indicates that the changes in this edit will not be reviewed until they are explicitly sent for review from the Google Play Console |
 | working-directory | false | . | Path to .project file |
 | service-account-json | false | service-account.json | Path tho your Google service-account.json file  |
 | godot-version | false | 3.5 | Check versions [here](https://downloads.tuxfamily.org/godotengine/) |
