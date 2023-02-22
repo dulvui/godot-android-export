@@ -91,13 +91,6 @@ runs:
         echo ${{ inputs.godot-version }}.stable >> ${{ inputs.working-directory }}/android/.build_version
         unzip ~/.local/share/godot/templates/${{ inputs.godot-version }}.stable/android_source.zip  -d ${{ inputs.working-directory }}/android/build
 
-<<<<<<< HEAD
-=======
-    - name: Open game in editor once to load assets
-      shell: bash
-      run: godot -e -q --path ${{ inputs.working-directory }}
-
->>>>>>> 6789be0 (add changes-not-sent-for-review parameter)
     - name: Export
       shell: bash
       run: godot --path ${{ inputs.working-directory }} --export Android
