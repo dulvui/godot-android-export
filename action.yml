@@ -15,9 +15,6 @@ inputs:
     description: 'Godot Engine version'
     required: false
     default: '3.5.1'
-  package-name:
-    description: 'Android package name'
-    required: true
   
 runs:
   using: "composite"

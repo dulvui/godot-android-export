@@ -19,7 +19,6 @@ If you are facing problems with the action or this README feels not complete, pu
 | key | required | default | description |
 | ----|----------|---------|-------------|
 | working-directory | false | . | Path to project.godot file |
-| package-name | true |   | Android package name |
 | godot-version | false | 3.5.1 | Check versions [here](https://downloads.tuxfamily.org/godotengine/) |
 
 ## Working examples
@@ -28,7 +27,7 @@ https://github.com/dulvui/pocket-broomball/blob/main/.github/workflows/upload-an
 https://github.com/dulvui/ball2box/blob/main/.github/workflows/upload-android.yml
 
 ## Version 2 breaking changes
-The repository and action ahs been renamed from godot-android-upload to simply godot-android-export to simplify the action and to remove third party actions dependencies.
+The repository and action has been renamed from godot-android-upload to simply godot-android-export to simplify the action and to remove third party actions dependencies.
 Now this actions follows the Unix philosophy of simply doing one thing well.
 You can then upload the aab/apk export  of your game where ever you want.
 
