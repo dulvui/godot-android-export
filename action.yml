@@ -1,6 +1,6 @@
 
-name: 'Godot Android Upload'
-description: 'Godot Engine: Export to Android and upload to Google Play Store'
+name: 'Godot Android Export'
+description: 'Godot Engine: Android export to aab and apk'
 author: 'Simon Dalvai @dulvui'
 branding:
   color: blue
@@ -15,24 +15,9 @@ inputs:
     description: 'Godot Engine version'
     required: false
     default: '3.5.1'
-  service-account-json:
-    description: 'Path to a valid Google service-account.json'
-    required: false
-    default: service-account.json
   package-name:
     description: 'Android package name'
     required: true
-  release-file:
-    description: 'Path to the apk file'
-    required: true
-  release-track:
-    description: 'Release track: production, beta, alpha, internalsharing, internal'
-    required: false
-    default: 'internal'
-  changes-not-sent-for-review:
-    description: 'Indicates that the changes in this edit will not be reviewed until they are explicitly sent for review from the Google Play Console'
-    required: false
-    default: false
   
 runs:
   using: "composite"
@@ -94,13 +79,3 @@ runs:
     - name: Export
       shell: bash
       run: godot --path ${{ inputs.working-directory }} --export Android
-
-    - name: Publish to Play Store
-      uses: r0adkll/upload-google-play@v1
-      with:
-        serviceAccountJson: ${{ inputs.service-account-json }}
-        packageName: ${{ inputs.package-name }}
-        releaseFiles: ${{ inputs.release-file }}
-        track: ${{ inputs.release-track }}
-        status: completed
-        changesNotSentForReview: ${{ inputs.changes-not-sent-for-review }}
