@@ -5,11 +5,16 @@ If you are facing problems with the action or this README feels not complete, pu
 ## Table of contents
 - [godot-android-export](#godot-android-export)
   - [Table of contents](#table-of-contents)
+  - [Godot 4.x support](#godot-4x-support)
   - [Requirements](#requirements)
   - [Parameters](#parameters)
   - [Working examples](#working-examples)
   - [Version 2 breaking changes](#version-2-breaking-changes)
   - [License](#license)
+
+## Godot 4.x support
+This action currently only works with Godot 3.x and I will update the action as soon as I create a valid Godot 4.x game.  
+If you really need Godot 4.x support, pull requests are always welcome :-) or simply open an issue and I'll do my best to update it. But of course I'll need your help for testing.
 
 ## Requirements
  - Godot Project
