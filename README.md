@@ -24,7 +24,7 @@ If you really need Godot 4.x support, pull requests are always welcome :-) or si
 | key | required | default | description |
 | ----|----------|---------|-------------|
 | working-directory | false | . | Path to project.godot file |
-| godot-version | false | 3.5.1 | Check versions [here](https://downloads.tuxfamily.org/godotengine/) |
+| godot-version | false | 3.5.3 | Check versions [here](https://downloads.tuxfamily.org/godotengine/) |
 
 ## Working examples
 You an find a working examples here:  
