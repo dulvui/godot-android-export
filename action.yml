@@ -1,6 +1,6 @@
 
 name: 'Godot Android Export'
-description: 'Godot Engine: Android export to aab and apk'
+description: 'Godot Engine 3.x and 4.x Android export
 author: 'Simon Dalvai @dulvui'
 branding:
   color: blue
@@ -23,7 +23,7 @@ runs:
       uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
-        java-version: 11
+        java-version: 17
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v2
