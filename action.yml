@@ -52,6 +52,7 @@ runs:
         unzip Godot_v${{ inputs.godot-version }}-stable_linux.x86_64.zip
         unzip Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz
         mkdir -p ~/.local/share/godot/export_templates/${{ inputs.godot-version }}.stable
+        mkdir -p ~/.config/godot/
         touch ~/.config/godot/editor_settings-4.tres
         mv templates/* ~/.local/share/godot/export_templates/${{ inputs.godot-version }}.stable
         rm -f Godot_v${{ inputs.godot-version }}-stable_linux.x86_64.zip Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz
