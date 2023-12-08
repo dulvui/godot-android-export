@@ -14,11 +14,16 @@ inputs:
   godot-version:
     description: 'Godot Engine version'
     required: false
-    default: '3.5.3'
+    default: '4.2'
   
 runs:
   using: "composite"
   steps:
+    - name: Check is running on Linux
+      if: runner.os != 'Linux'
+      shell: bash
+      run: exit 1
+
     - name: Set up JDK 1.8
       uses: actions/setup-java@v4
       with:
@@ -38,21 +43,17 @@ runs:
           ~/.config/godot/**
         key: ${{ runner.os }}-godot-${{ inputs.godot-version }}
 
-    - name: Download and config Godot Engine headless linux server and templates
-      if: steps.cache-godot.outputs.cache-hit != 'true'
+    - name: Download and config Godot Engine linux server and templates
       shell: bash
+      if: steps.cache-godot.outputs.cache-hit != 'true'
       run: |
         wget -q https://downloads.tuxfamily.org/godotengine/${{ inputs.godot-version }}/Godot_v${{ inputs.godot-version }}-stable_linux_headless.64.zip
         wget -q https://downloads.tuxfamily.org/godotengine/${{ inputs.godot-version }}/Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz
-        mkdir ~/.cache
-        mkdir -p ~/.config/godot
-        mkdir -p ~/.local/share/godot/templates/${{ inputs.godot-version }}.stable
         unzip Godot_v${{ inputs.godot-version }}-stable_linux_headless.64.zip
-        mv Godot_v${{ inputs.godot-version }}-stable_linux_headless.64 /usr/local/bin/godot
         unzip Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz
-        mv templates/* ~/.local/share/godot/templates/${{ inputs.godot-version }}.stable
+        mkdir -p ${{ env.TEMPLATE_DIR }}
+        mv templates/* ${{ env.TEMPLATE_DIR }}
         rm -f Godot_v${{ inputs.godot-version }}-stable_linux_headless.64.zip Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz
-        godot -e -q
 
     - name: Set Android SDK path in Godot Editor settings
       if: steps.cache-godot.outputs.cache-hit != 'true'
@@ -62,7 +63,7 @@ runs:
           export/android/android_sdk_path = "/usr/local/lib/android/sdk"
           export/android/shutdown_adb_on_exit = true
           export/android/force_system_user = false
-      run: echo $SETTINGS >> ~/.config/godot/editor_settings-3.tres
+      run: echo $SETTINGS >> ~/.config/godot/editor_settings-4.tres
 
     - name: Install Android build template
       shell: bash
@@ -75,4 +76,4 @@ runs:
 
     - name: Export
       shell: bash
-      run: godot --path ${{ inputs.working-directory }} --export Android
+      run: godot --headless --path ${{ inputs.working-directory }} --export-release Android
