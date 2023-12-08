@@ -15,7 +15,17 @@ inputs:
     description: 'Godot Engine version'
     required: false
     default: '4.2'
-  
+  keystore-path:
+    description: 'Release keystore absolute path'
+    required: false
+    default: release.keystore
+  keystore-user:
+    description: 'Release keystore alias/user'
+    required: true
+  keystore-password:
+    description: 'Release keystore password'
+    required: true
+
 runs:
   using: "composite"
   steps:
@@ -79,4 +89,11 @@ runs:
 
     - name: Export
       shell: bash
+      env:
+        GODOT_ANDROID_KEYSTORE_DEBUG_PATH: debug.keystore
+        GODOT_ANDROID_KEYSTORE_DEBUG_USER: androiddebugkey
+        GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD: android
+        GODOT_ANDROID_KEYSTORE_RELEASE_PATH: ${{ inputs.keystore-path }}
+        GODOT_ANDROID_KEYSTORE_RELEASE_USER: ${{ inputs.keystore-user }}
+        GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD: ${{ inputs.keystore-password }}
       run: ./Godot_v${{ inputs.godot-version }}-stable_linux.x86_64 --headless --path ${{ inputs.working-directory }} --export-release Android
