@@ -47,13 +47,13 @@ runs:
       shell: bash
       if: steps.cache-godot.outputs.cache-hit != 'true'
       run: |
-        wget -q https://downloads.tuxfamily.org/godotengine/${{ inputs.godot-version }}/Godot_v${{ inputs.godot-version }}-stable_linux_headless.64.zip
+        wget -q https://downloads.tuxfamily.org/godotengine/${{ inputs.godot-version }}/Godot_v${{ inputs.godot-version }}-stable_linux.x86_64.zip
         wget -q https://downloads.tuxfamily.org/godotengine/${{ inputs.godot-version }}/Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz
-        unzip Godot_v${{ inputs.godot-version }}-stable_linux_headless.64.zip
+        unzip Godot_v${{ inputs.godot-version }}-stable_linux.x86_64.zip
         unzip Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz
         mkdir -p ${{ env.TEMPLATE_DIR }}
         mv templates/* ${{ env.TEMPLATE_DIR }}
-        rm -f Godot_v${{ inputs.godot-version }}-stable_linux_headless.64.zip Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz
+        rm -f Godot_v${{ inputs.godot-version }}-stable_linux.x86_64.zip Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz
 
     - name: Set Android SDK path in Godot Editor settings
       if: steps.cache-godot.outputs.cache-hit != 'true'
