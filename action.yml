@@ -51,8 +51,8 @@ runs:
         wget -q https://downloads.tuxfamily.org/godotengine/${{ inputs.godot-version }}/Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz
         unzip Godot_v${{ inputs.godot-version }}-stable_linux.x86_64.zip
         unzip Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz
-        mkdir -p ${{ env.TEMPLATE_DIR }}
-        mv templates/* ${{ env.TEMPLATE_DIR }}
+        mkdir -p ~/.local/share/godot/export_templates/${{ inputs.godot-version }}.stable
+        mv templates/* ~/.local/share/godot/export_templates/${{ inputs.godot-version }}.stable
         rm -f Godot_v${{ inputs.godot-version }}-stable_linux.x86_64.zip Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz
 
     - name: Set Android SDK path in Godot Editor settings
@@ -76,4 +76,4 @@ runs:
 
     - name: Export
       shell: bash
-      run: godot --headless --path ${{ inputs.working-directory }} --export-release Android
+      run: ./Godot_v${{ inputs.godot-version }}-stable_linux.x86_64 --headless --path ${{ inputs.working-directory }} --export-release Android
