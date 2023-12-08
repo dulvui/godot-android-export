@@ -15,6 +15,9 @@ inputs:
     description: 'Godot Engine version'
     required: false
     default: '4.2'
+  export-path:
+    description: 'Path of the exported game'
+    required: true
 
 runs:
   using: "composite"
@@ -84,4 +87,4 @@ runs:
 
     - name: Export
       shell: bash
-      run: ./Godot_v${{ inputs.godot-version }}-stable_linux.x86_64 --headless --path ${{ inputs.working-directory }} --export-release Android ../FutsalManager.aab
+      run: ./Godot_v${{ inputs.godot-version }}-stable_linux.x86_64 --headless --path ${{ inputs.working-directory }} --export-release Android ${{ inputs.export-path }}
