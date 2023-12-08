@@ -1,5 +1,5 @@
 # godot-android-export
-Github Action to export a Godot game for Android to apk/aab.  
+Github Action to export a Godot Engine 3 and 4 game for Android to apk/aab.  
 If you are facing problems with the action or this README feels not complete, pull requests are welcome or open an issue.
 
 ## Table of contents
@@ -13,8 +13,8 @@ If you are facing problems with the action or this README feels not complete, pu
   - [License](#license)
 
 ## Godot 4.x support
-This action currently only works with Godot 3.x and I will update the action as soon as I create a valid Godot 4.x game.  
-If you really need Godot 4.x support, pull requests are always welcome :-) or simply open an issue and I'll do my best to update it. But of course I'll need your help for testing.
+I start now to adapt the action for Godot 4.  
+Godot 3 will be available under the v3.x.x tag and Godot 4 under 4.x.x tag
 
 ## Requirements
  - Godot Project
