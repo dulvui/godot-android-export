@@ -5,16 +5,57 @@ If you are facing problems with the action or this README feels not complete, pu
 ## Table of contents
 - [godot-android-export](#godot-android-export)
   - [Table of contents](#table-of-contents)
-  - [Godot 4.x support](#godot-4x-support)
+- [Godot 4.x](#godot-4x)
   - [Requirements](#requirements)
   - [Parameters](#parameters)
+  - [How to use](#how-to-use)
   - [Working examples](#working-examples)
+- [Godot 3.x](#godot-3x)
+  - [Requirements](#requirements-1)
+  - [Parameters](#parameters-1)
+  - [How to use](#how-to-use-1)
+  - [Working examples](#working-examples-1)
   - [Version 2 breaking changes](#version-2-breaking-changes)
   - [License](#license)
 
-## Godot 4.x support
-I start now to adapt the action for Godot 4.  
-Godot 3 will be available under the v3.x.x tag and Godot 4 under 4.x.x tag
+# Godot 4.x
+Godot 4.x is the current active stable version and will be actively maintained.
+You can find the code in the `main` branch.
+
+## Requirements
+ - Godot Project
+ - A valid exports_preset.cfg with an Android config
+ - [Optional] A valid export_credentials.cfg
+
+## Parameters
+| key | required | default | description |
+| ----|----------|---------|-------------|
+| working-directory | false | . | Path to project.godot file |
+| godot-version | false | 4.x | Check versions [here](https://downloads.tuxfamily.org/godotengine/) |
+| keystore-path | false | "" | Path to an valid release keystore |
+| keystore-user | false | "" | The user/alias of the keystore |
+| keystore-password | false | "" | The password of the keystore |
+
+## How to use
+Use the 4.x tag
+```
+- name: Godot Android export
+  uses: dulvui/godot-android-export@v4.0.0
+  with:
+    working-directory: $WORKING_DIRECTORY
+    godot-version: ${{ env.GODOT_VERSION }}
+    keystore-path: $GITHUB_WORKSPACE/release.keystore
+    keystore-user: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
+    keystore-password: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+```
+
+## Working examples
+You an find a working examples here:  
+https://github.com/dulvui/futsal-manager/blob/main/.github/workflows/upload-android.yml
+
+# Godot 3.x
+Godot 3.x is the current LTS version and will be less actively maintained.
+You can find the code in the `godot-3` branch.
 
 ## Requirements
  - Godot Project
@@ -24,7 +65,16 @@ Godot 3 will be available under the v3.x.x tag and Godot 4 under 4.x.x tag
 | key | required | default | description |
 | ----|----------|---------|-------------|
 | working-directory | false | . | Path to project.godot file |
-| godot-version | false | 3.5.3 | Check versions [here](https://downloads.tuxfamily.org/godotengine/) |
+| godot-version | false | 3.x | Check versions [here](https://downloads.tuxfamily.org/godotengine/) |
+
+## How to use
+Use the 3.x tag
+```
+- name: Godot Android export
+  uses: dulvui/godot-android-export@v3.0.0
+  with:
+    working-directory: $WORKING_DIRECTORY
+```
 
 ## Working examples
 You an find a working examples here:  

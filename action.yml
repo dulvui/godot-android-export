@@ -16,15 +16,15 @@ inputs:
     required: false
     default: '4.2'
   keystore-path:
-    description: 'Android keystore path'
+    description: 'Path to an valid release keystore'
     required: false
     default: ""
   keystore-user:
-    description: 'Android keystore user'
+    description: 'The user/alias of the keystore'
     required: false
     default: ""
   keystore-password:
-    description: 'Android keystore password'
+    description: 'The password of the keystore'
     required: false
     default: ""
 
