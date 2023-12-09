@@ -33,11 +33,6 @@ runs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v2
 
-
-    - name: Create release keystore
-      shell: bash
-      run: echo ${{ inputs.keystore-base64 }} | base64 --decode > release.keystore
-
     - name: Cache Godot files
       id: cache-godot
       uses: actions/cache@v3
