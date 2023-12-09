@@ -25,16 +25,13 @@ You can find the code in the `main` branch.
 ## Requirements
  - Godot Project
  - A valid exports_preset.cfg with an Android config
- - [Optional] A valid export_credentials.cfg
+ - A valid export_credentials.cfg
 
 ## Parameters
 | key | required | default | description |
 | ----|----------|---------|-------------|
 | working-directory | false | . | Path to project.godot file |
 | godot-version | false | 4.x | Check versions [here](https://downloads.tuxfamily.org/godotengine/) |
-| keystore-path | false | "" | Path to an valid release keystore |
-| keystore-user | false | "" | The user/alias of the keystore |
-| keystore-password | false | "" | The password of the keystore |
 
 ## How to use
 Use the 4.x tag
@@ -42,11 +39,8 @@ Use the 4.x tag
 - name: Godot Android export
   uses: dulvui/godot-android-export@v4.0.0
   with:
-    working-directory: $WORKING_DIRECTORY
-    godot-version: ${{ env.GODOT_VERSION }}
-    keystore-path: $GITHUB_WORKSPACE/release.keystore
-    keystore-user: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
-    keystore-password: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+    working-directory: game
+    godot-version: 4.2
 ```
 
 ## Working examples
@@ -73,7 +67,8 @@ Use the 3.x tag
 - name: Godot Android export
   uses: dulvui/godot-android-export@v3.0.0
   with:
-    working-directory: $WORKING_DIRECTORY
+    working-directory: game
+    godot-version: 3.5.3
 ```
 
 ## Working examples
