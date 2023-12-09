@@ -18,15 +18,15 @@ inputs:
   keystore-base64:
     description: 'Path to an valid release keystore'
     required: false
-    default: ""
+    default: ''
   keystore-user:
     description: 'The user/alias of the keystore'
     required: false
-    default: ""
+    default: ''
   keystore-password:
     description: 'The password of the keystore'
     required: false
-    default: ""
+    default: ''
 
 runs:
   using: "composite"
@@ -46,8 +46,9 @@ runs:
       uses: android-actions/setup-android@v2
 
 
-      - name: Create release keystore
-        run: echo ${{ inputs.keystore-base64 }} | base64 --decode > release.keystore
+    - name: Create release keystore
+      shell: bash
+      run: echo ${{ inputs.keystore-base64 }} | base64 --decode > release.keystore
 
     - name: Cache Godot files
       id: cache-godot
