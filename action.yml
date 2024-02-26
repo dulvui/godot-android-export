@@ -31,7 +31,7 @@ runs:
         java-version: 17
 
     - name: Setup Android SDK
-      uses: android-actions/setup-android@v2
+      uses: android-actions/setup-android@v3
 
     - name: Cache Godot files
       id: cache-godot
