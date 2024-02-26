@@ -57,7 +57,7 @@ runs:
         mv templates/* ~/.local/share/godot/export_templates/${{ inputs.godot-version }}.stable
         rm -f Godot_v${{ inputs.godot-version }}-stable_linux.x86_64.zip Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz
         mv ./Godot_v${{ inputs.godot-version }}-stable_linux.x86_64 /usr/local/bin/godot
-        godot --headless --path ${{ inputs.working-directory }} --quit
+        godot --headless --path ${{ inputs.working-directory }} --quit-after 200 -v -e > /dev/null
 
     - name: Set Android SDK path in Godot Editor settings
       if: steps.cache-godot.outputs.cache-hit != 'true'
