@@ -85,6 +85,7 @@ runs:
 
     - name: Open project once to import assets in editor mode
       shell: bash
+      continue-on-error: true # timeout will exit with code 124
       run: timeout 25 godot --headless --path ${{ inputs.working-directory }} -e
 
     - name: Export
