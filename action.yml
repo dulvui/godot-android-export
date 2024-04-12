@@ -57,7 +57,6 @@ runs:
         mv templates/* ~/.local/share/godot/export_templates/${{ inputs.godot-version }}.stable
         rm -f Godot_v${{ inputs.godot-version }}-stable_linux.x86_64.zip Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz
         mv ./Godot_v${{ inputs.godot-version }}-stable_linux.x86_64 /usr/local/bin/godot
-        timeout 25 godot --headless --path ${{ inputs.working-directory }} -e
 
     - name: Set Android SDK path in Godot Editor settings
       if: steps.cache-godot.outputs.cache-hit != 'true'
@@ -83,6 +82,10 @@ runs:
         touch ${{ inputs.working-directory }}/android/build/.gdignore
         echo ${{ inputs.godot-version }}.stable >> ${{ inputs.working-directory }}/android/.build_version
         unzip ~/.local/share/godot/export_templates/${{ inputs.godot-version }}.stable/android_source.zip  -d ${{ inputs.working-directory }}/android/build
+
+    - name: Open project once to import assets in editor mode
+      shell: bash
+      run: timeout 25 godot --headless --path ${{ inputs.working-directory }} -e
 
     - name: Export
       shell: bash
