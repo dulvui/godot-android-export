@@ -30,17 +30,18 @@ You can find the code in the `main` branch.
 ## Parameters
 | key | required | default | description |
 | ----|----------|---------|-------------|
+| godot-version | true | . | Godot Engine version. Supported are 4.x versions. Check versions [here](https://github.com/godotengine/godot-builds/releases) |
+| godot-channel | false | stable | Godot Engine release channel (stable, beta, rc1, rc2, rc3...). Defaults to 'stable' Check release channels [here](https://github.com/godotengine/godot-builds/releases) |
 | working-directory | false | . | Path to project.godot file |
-| godot-version | false | 4.x | Check versions [here](https://downloads.tuxfamily.org/godotengine/) |
+
 
 ## How to use
 Use the 4.x tag
 ```
 - name: Godot Android export
-  uses: dulvui/godot-android-export@v4.0.0
+  uses: dulvui/godot-android-export@v4
   with:
-    working-directory: game
-    godot-version: 4.2
+    godot-version: 4.2.2
 ```
 
 ## Working examples
