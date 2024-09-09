@@ -23,8 +23,9 @@ If you really need Godot 4.x support, pull requests are always welcome :-) or si
 ## Parameters
 | key | required | default | description |
 | ----|----------|---------|-------------|
+| godot-version | true | . | Godot Engine version. Supported are 4.x versions. Check versions [here](https://github.com/godotengine/godot-builds/releases) |
+| godot-channel | false | stable | Godot Engine release channel (stable, beta, rc1, rc2, rc3...). Defaults to 'stable' Check release channels [here](https://github.com/godotengine/godot-builds/releases) |
 | working-directory | false | . | Path to project.godot file |
-| godot-version | false | 3.5.3 | Check versions [here](https://downloads.tuxfamily.org/godotengine/) |
 
 ## Working examples
 You an find a working examples here:  
