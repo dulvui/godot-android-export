@@ -50,7 +50,7 @@ runs:
         unzip Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_export_templates.tpz
         mkdir -p ~/.local/share/godot/export_templates/${{ inputs.godot-version }}.${{ inputs.godot-channel }}
         mkdir -p ~/.config/godot
-        unzip Godot_v${{ inputs.godot-version }}-${{ inouts.godot-channel }}_linux_headless.64.zip
+        unzip Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_linux_headless.64.zip
         mv Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_linux_headless.64 /usr/local/bin/godot
         unzip Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_export_templates.tpz
         mv templates/* ~/.local/share/godot/templates/${{ inputs.godot-version }}.${{ inputs.godot-channel }}
