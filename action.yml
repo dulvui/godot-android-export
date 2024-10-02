@@ -51,7 +51,6 @@ runs:
         mkdir -p ~/.local/share/godot/export_templates/${{ inputs.godot-version }}.${{ inputs.godot-channel }}
         mkdir -p ~/.config/godot
         mv Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_linux_headless.64 /usr/local/bin/godot
-        unzip Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_export_templates.tpz
         mv templates/* ~/.local/share/godot/templates/${{ inputs.godot-version }}.${{ inputs.godot-channel }}
         rm -f Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_linux_headless.64.zip Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_export_templates.tpz
 
