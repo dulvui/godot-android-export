@@ -48,7 +48,7 @@ runs:
         wget -q https://github.com/godotengine/godot-builds/releases/download/${{ inputs.godot-version }}-${{ inputs.godot-channel}}/Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_export_templates.tpz
         unzip Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_linux_headless.64.zip
         unzip Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_export_templates.tpz
-        mkdir -p ~/.local/share/godot/export_templates/${{ inputs.godot-version }}.${{ inputs.godot-channel }}
+        mkdir -p ~/.local/share/godot/templates/${{ inputs.godot-version }}.${{ inputs.godot-channel }}
         mkdir -p ~/.config/godot
         mv Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_linux_headless.64 /usr/local/bin/godot
         mv templates/* ~/.local/share/godot/templates/${{ inputs.godot-version }}.${{ inputs.godot-channel }}
