@@ -10,9 +10,9 @@ inputs:
     description: 'Godot Engine version'
     required: true
   godot-channel:
-    description: 'Godot Engine release channel (${{ inputs.godot-channel }}, beta, rc1, rc2, rc3...). Defaults to ${{ inputs.godot-channel }}'
+    description: 'Godot Engine release channel (stable, beta, rc1, rc2, rc3...). Defaults to stable.'
     required: false
-    default: '${{ inputs.godot-channel }}'
+    default: 'stable'
   working-directory:
     description: 'The working directory'
     required: false
@@ -38,7 +38,7 @@ runs:
           ~/.local/share/godot/**
           /usr/local/bin/godot
           ~/.config/godot/**
-        key: ${{ runner.os }}-godot-${{ inputs.godot-version }}
+        key: ${{ runner.os }}-godot-${{ inputs.godot-version }}-${{ inputs.godot-channel }}
 
     - name: Download and config Godot Engine headless linux server and templates
       if: steps.cache-godot.outputs.cache-hit != 'true'
