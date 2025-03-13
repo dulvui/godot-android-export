@@ -46,7 +46,7 @@ Use the 4.x tag
 
 ## Working examples
 You an find a working examples here:  
-https://github.com/dulvui/futsal-manager/blob/main/.github/workflows/upload-android.yml
+https://github.com/dulvui/99managers-futsal-edition/blob/ad492d029537519dd34eef19122d72a8a1eeb197/.github/workflows/upload-android.yml
 
 # Godot 3.x
 Godot 3.x is the current LTS version and will be less actively maintained.
