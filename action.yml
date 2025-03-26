@@ -41,28 +41,47 @@ runs:
       uses: actions/cache@v4
       with:
         path: |
-          ~/.local/share/godot/**
           /usr/local/bin/godot
-          ~/.config/godot/**
         key: ${{ runner.os }}-godot-${{ inputs.godot-version }}
 
-    - name: Download and config Godot Engine linux server and templates
+    - name: Download and extract Godot Engine linux server
       shell: bash
       if: steps.cache-godot.outputs.cache-hit != 'true'
       run: |
         wget -q https://github.com/godotengine/godot-builds/releases/download/${{ inputs.godot-version }}-${{ inputs.godot-channel}}/Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_linux.x86_64.zip
-        wget -q https://github.com/godotengine/godot-builds/releases/download/${{ inputs.godot-version }}-${{ inputs.godot-channel}}/Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_export_templates.tpz
         unzip Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_linux.x86_64.zip
-        unzip Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_export_templates.tpz
-        mkdir -p ~/.local/share/godot/export_templates/${{ inputs.godot-version }}.${{ inputs.godot-channel }}
         mkdir -p ~/.config/godot/
         touch ~/.config/godot/editor_settings-4.tres
-        mv templates/* ~/.local/share/godot/export_templates/${{ inputs.godot-version }}.${{ inputs.godot-channel }}
-        rm -f Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_linux.x86_64.zip Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_export_templates.tpz
         mv ./Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_linux.x86_64 /usr/local/bin/godot
 
+    - name: Check if android custom build directory exists
+      id: check-custom-build
+      run: |
+        if [ -d "${{ inputs.working-directory }}/android" ]; then
+          echo "exists=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "exists=false" >> "$GITHUB_OUTPUT"
+        fi
+
+    - name: Cache Godot export templates
+      id: cache-export-templates
+      if: steps.check-custom-build.outputs.exists == 'false'
+      uses: actions/cache@v4
+      with:
+        path: ~/.local/share/godot/**
+        key: ${{ runner.os }}-godot-${{ inputs.godot-version }}-export-templates
+
+    - name: Download and extract templates
+      shell: bash
+      if: steps.check-custom-build.outputs.exists != 'true' && steps.cache-export-templates.outputs.cache-hit != 'true'
+      run: |
+        wget -q https://github.com/godotengine/godot-builds/releases/download/${{ inputs.godot-version }}-${{ inputs.godot-channel}}/Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_export_templates.tpz
+        unzip Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_export_templates.tpz
+        mkdir -p ~/.local/share/godot/export_templates/${{ inputs.godot-version }}.${{ inputs.godot-channel }}
+        mv templates/* ~/.local/share/godot/export_templates/${{ inputs.godot-version }}.${{ inputs.godot-channel }}
+        rm -f Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_linux.x86_64.zip Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_export_templates.tpz
+
     - name: Set Android SDK path in Godot Editor settings
-      if: steps.cache-godot.outputs.cache-hit != 'true'
       shell: bash
       env:
         SETTINGS: |
@@ -79,6 +98,7 @@ runs:
 
     - name: Install Android build template
       shell: bash
+      if: steps.check-custom-build.outputs.exists != 'true'
       run: |
         mkdir -p ${{ inputs.working-directory }}/android/plugins
         mkdir -p ${{ inputs.working-directory }}/android/build
@@ -94,3 +114,4 @@ runs:
     - name: Export
       shell: bash
       run: godot --headless --path ${{ inputs.working-directory }} --export-release Android
+
