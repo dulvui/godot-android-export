@@ -55,6 +55,7 @@ runs:
         mv ./Godot_v${{ inputs.godot-version }}-${{ inputs.godot-channel }}_linux.x86_64 /usr/local/bin/godot
 
     - name: Check if android custom build directory exists
+      shell: bash
       id: check-custom-build
       run: |
         if [ -d "${{ inputs.working-directory }}/android" ]; then
